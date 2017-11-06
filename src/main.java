@@ -20,7 +20,9 @@ public class main {
 	        
 	        System.out.println(" \nEntrez une phrase comportant les éléments de l'aphabet données :");
 	        test=sc.nextLine();
-	        init(test);
+	        
+	        tree.init(test);
+	        
 	        // Encoder le texte
 	        String encode = encode(tree,test);
 	        // Afficher le texte encodé

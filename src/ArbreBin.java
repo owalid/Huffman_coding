@@ -42,5 +42,4 @@ public class ArbreBin {
 	public boolean isVide() {
 		return vide;
 	}
-
 }

@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class ListeR{
 	
 	ArbreHuff tete;
@@ -11,10 +9,43 @@ public class ListeR{
 		this.reste = reste;
 		this.vide = false;
 	}
+	public ListeR(ArbreHuff tete) {
+		this.tete = tete;
+		this.vide = false;
+	}
+	
 	public ListeR() {
 		this.vide = true;
 	}
 	
+	//inserer dans l'ordre
+	public ListeR insererOrd(ArbreHuff val){
+		if(vide){
+			return this.prefix(val);
+		}	
+		else if (val.couple.getFrequence()>=tete.couple.getFrequence()){
+			return this.prefix(val);
+		}
+		else{
+			return this.reste.insererOrd(val).prefix(this.tete);
+		}
+	}
+	
+	//Suprimer dans l'ordre
+	public ListeR supprimerOrd(ArbreHuff v){
+		if(this.vide){
+			return this.prefix(v);
+		}
+		else if(this.tete == v){
+			return this.reste;
+		}
+		else if (v.couple.getFrequence()>= this.tete.couple.getFrequence()){
+			return this;
+		}
+		else
+			return this.reste.supprimerOrd(v).prefix(this.tete);
+	}
+		
 	public ArbreHuff getTete() {
 			return tete;	
 	}
@@ -28,19 +59,6 @@ public class ListeR{
 	
 	public ListeR prefix(ArbreHuff i){
 		return new ListeR(i,this);
-	}
-	
-	//inserer dans l'ordre
-	public ListeR InsererOrd(ListeR l, ArbreHuff val){
-		if(l.vide){
-			return l.prefix(val);
-		}
-		
-		else if (val.couple.frequence<l.tete.couple.frequence){
-			return l.prefix(val);
-		}
-		else
-			return InsererOrd(l.reste, val).prefix(l.tete);
 	}
 	
 	

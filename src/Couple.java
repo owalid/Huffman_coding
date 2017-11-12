@@ -1,10 +1,5 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 public class Couple {
-	
-	
+
 	 int frequence;
 	 char car;
 
@@ -12,13 +7,14 @@ public class Couple {
 		this.frequence = frequence;
 		this.car = car;
 	}
+	public Couple(){
+		
+	}
 	
 	Couple(int frequence){
 		this.frequence = frequence;
 	}
-
-
-
+	
 	public int getFrequence() {
 		return frequence;
 	}
@@ -34,7 +30,5 @@ public class Couple {
 	public void setCar(char car) {
 		this.car = car;
 	}
-	
-	
 	
 }

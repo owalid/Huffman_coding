@@ -11,6 +11,10 @@ public class Couple {
 		
 	}
 	
+	@Override
+	public String toString() {
+		return "Couple [frequence=" + frequence + ", car=" + car + "]";
+	}
 	Couple(int frequence){
 		this.frequence = frequence;
 	}

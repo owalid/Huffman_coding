@@ -23,7 +23,7 @@ public class ListeR{
 		if(vide){
 			return this.prefix(val);
 		}	
-		else if (val.couple.getFrequence()>=tete.couple.getFrequence()){
+		else if (val.couple.getFrequence()>=this.tete.couple.getFrequence()){
 			return this.prefix(val);
 		}
 		else{
@@ -34,7 +34,7 @@ public class ListeR{
 	//Suprimer dans l'ordre
 	public ListeR supprimerOrd(ArbreHuff v){
 		if(this.vide){
-			return this.prefix(v);
+			return this;
 		}
 		else if(this.tete == v){
 			return this.reste;

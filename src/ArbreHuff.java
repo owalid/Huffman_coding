@@ -20,10 +20,6 @@ public class ArbreHuff  {
 		vide = true;
 	}
 	
-    public ArbreHuff creerArbre(char c, int freq) {
-    	return new ArbreHuff(new Couple(freq,c));
-    }
-
 	public boolean isFeuille(){
 		if(this.vide){
 			return true;
@@ -36,6 +32,31 @@ public class ArbreHuff  {
 		}
 
 	}
+	
+    public Couple getCouple() {
+		return couple;
+	}
+
+	public void setCouple(Couple couple) {
+		this.couple = couple;
+	}
+
+	public ArbreHuff getFg() {
+		return fg;
+	}
+
+	public void setFg(ArbreHuff fg) {
+		this.fg = fg;
+	}
+
+	public ArbreHuff getFd() {
+		return fd;
+	}
+
+	public void setFd(ArbreHuff fd) {
+		this.fd = fd;
+	}
+
 
 	public boolean isVide() {
 		return vide;
@@ -44,6 +65,12 @@ public class ArbreHuff  {
 	public void setVide(boolean vide) {
 		this.vide = vide;
 	}
+	
+	@Override
+	public String toString() {
+		return "ArbreHuff [vide=" + vide + ", couple=" + couple + ", fg=" + fg + ", fd=" + fd + "]";
+	}
+
 }
 
    

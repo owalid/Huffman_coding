@@ -80,19 +80,32 @@ public class main {
 			System.out.println("			Bienvenu dans l'algorithme d'huffman, vous allez pouvoir coder et decoder des chaines de caractere");
 			System.out.println("/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////");
 			
-
+			 for (i=0; i<tabChar.length; i++){
+				  
+		        	System.out.println(charFreqs[i] + "\t" + tabChar[i]);
+		        }
 
 			 // On créer la liste contenant les arbres
 	        ListeR l = new ListeR();
 	        for (i=0; i<tabChar.length; i++){
 	  
-	        	l = l.insererOrd(new ArbreHuff(new Couple(charFreqs[i],tabChar[i])));
+	        	l = l.insererOrd(new ArbreHuff(new Couple(charFreqs[i], tabChar[i])));
 	        }
-	        //
 	        
+	        //D
+	        //System.out.println(l.reste.tete.couple.toString());
+
+
+	        ArbreHuff tree = huffman(l);
+	        tree.setVide(false);
+	        
+	        System.out.println(tree.couple.toString());
+	        System.exit(0);
+	        
+
 	        System.out.println("TABLE DES CODES");
 	        System.out.println("LETTRE\tFREQUENCE\tCODE HUFFMAN");
-	        afficherCodes(huffman(l), new StringBuffer());
+	        afficherCodes(tree, new StringBuffer());
 	        
 	        
 	        System.out.println(" \nEntrez une phrase comportant les éléments de l'aphabet données :");
@@ -109,22 +122,23 @@ public class main {
 	        System.out.println("\n\nTEXTE DÉCODÉ");
 	        //System.out.println(decode(huffman(l),encode));
 
+	        
 			System.out.println("voulez vous recoder une chaine de caractere ?");
 			jouer=sc.nextBoolean();
 			
 		}
 	}
 
-	public static ArbreHuff huffman(ListeR l) {
+	public static  ArbreHuff huffman(ListeR l) {
 		while(!l.reste.vide){
-			System.out.println("c");
+//			System.out.println("c");
 			ArbreHuff z = new ArbreHuff(new Couple());
-			ArbreHuff x = l.tete;
+			ArbreHuff x = l.getTete();
 			z.fg = x;
 			z.vide = false;
-			ArbreHuff y = l.reste.tete;
+			ArbreHuff y = l.getReste().getTete();
 			z.fd = y;
-			z.couple.setFrequence(x.couple.frequence + y.couple.frequence);
+			z.couple.setFrequence(x.getCouple().getFrequence() + y.getCouple().getFrequence());
 			l.supprimerOrd(x);
 			l.supprimerOrd(y);
 			l.insererOrd(z);

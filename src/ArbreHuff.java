@@ -1,6 +1,6 @@
 public class ArbreHuff  {
 
-	public boolean vide;
+	public int vide;
 	public Couple couple;
 	public ArbreHuff fg, fd;
 	
@@ -8,23 +8,23 @@ public class ArbreHuff  {
 		this.fd = fd;
 		this.fg = fg;
 		this.couple = couple;
-		vide = false;
+		vide = 0;
 	}
 	
 	public ArbreHuff(Couple couple){
 		this.couple = couple;
-		vide = false;
+		vide = 0;
 	}
 	
 	public ArbreHuff(){
-		vide = true;
+		this.couple.frequence = Integer.MAX_VALUE;
 	}
 	
 	public boolean isFeuille(){
-		if(this.vide){
+		if(this.isVide() == Integer.MAX_VALUE){
 			return true;
 		}
-		else if (this.fg.vide && this.fd.vide){
+		else if (this.fg.isVide() == Integer.MAX_VALUE && this.fd.isVide() == Integer.MAX_VALUE){
 			return true;
 		}
 		else {
@@ -58,11 +58,14 @@ public class ArbreHuff  {
 	}
 
 
-	public boolean isVide() {
-		return vide;
+	public int isVide() {
+		if(this.couple == null){
+			this.vide = Integer.MAX_VALUE;
+		}
+		return this.vide;
 	}
 
-	public void setVide(boolean vide) {
+	public void setVide(int vide) {
 		this.vide = vide;
 	}
 	

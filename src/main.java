@@ -97,30 +97,32 @@ public class main {
 
 
 	        ArbreHuff tree = huffman(l);
-	        tree.setVide(false);
+	        tree.setVide(0);
 	        
 	        System.out.println(tree.couple.toString());
-	        System.exit(0);
+
 	        
 
 	        System.out.println("TABLE DES CODES");
 	        System.out.println("LETTRE\tFREQUENCE\tCODE HUFFMAN");
 	        afficherCodes(tree, new StringBuffer());
-	        
+	        System.exit(0);
+
 	        
 	        System.out.println(" \nEntrez une phrase comportant les éléments de l'aphabet données :");
 	        test=sc.nextLine();
+	        sc.close();
 	        
 	        
 	        // Encoder le texte
-	        //String encode = encode(huffman(l),test);
+	        String encode = encode(huffman(l),test);
 	        // Afficher le texte encodé
 	        System.out.println("\nTEXTE ENCODÉ");
-	       // System.out.println(encode); 
+	        System.out.println(encode); 
 	        
 	        // Decoder le texte
 	        System.out.println("\n\nTEXTE DÉCODÉ");
-	        //System.out.println(decode(huffman(l),encode));
+	        System.out.println(decode(huffman(l),encode));
 
 	        
 			System.out.println("voulez vous recoder une chaine de caractere ?");
@@ -130,12 +132,12 @@ public class main {
 	}
 
 	public static  ArbreHuff huffman(ListeR l) {
-		while(!l.reste.vide){
-//			System.out.println("c");
+		while(l.isVide() != 0){
+		System.out.println("c");
 			ArbreHuff z = new ArbreHuff(new Couple());
 			ArbreHuff x = l.getTete();
 			z.fg = x;
-			z.vide = false;
+			z.setVide(0);
 			ArbreHuff y = l.getReste().getTete();
 			z.fd = y;
 			z.couple.setFrequence(x.getCouple().getFrequence() + y.getCouple().getFrequence());
@@ -158,8 +160,8 @@ public class main {
     		    	decodeText += tree.fg.couple.car; // Retour la valeur dans la feuille gauche  
 	                node = tree; 
 	    		}else{
-	    			if(node.vide){
-	    				node.setVide(false);
+	    			if(node.isVide() == Integer.MAX_VALUE){
+	    				node.setVide(0);
 	    	    			}
 	    			node = node.fg;  
 	    		}
@@ -168,8 +170,8 @@ public class main {
     		    	decodeText += tree.fg.couple.car; // Retour la valeur dans la feuille gauche droite
 	                node = tree; 
 	    		}else{
-	    			if(node.vide){
-	    				node.setVide(false);
+	    			if(node.isVide() == Integer.MAX_VALUE){
+	    				node.setVide(0);
 	    	    			}
 	    			node = node.fd; 
 	    		}

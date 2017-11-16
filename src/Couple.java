@@ -7,6 +7,7 @@ public class Couple {
 		this.frequence = frequence;
 		this.car = car;
 	}
+	
 	public Couple(){
 		
 	}

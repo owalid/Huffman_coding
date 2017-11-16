@@ -33,6 +33,15 @@ public class ArbreHuff  {
 
 	}
 	
+	// setter pour initialiser un caractere et cr�er le fils gauche et fils droit
+		public void setRacine(Couple c)
+		{
+			couple=c;
+			fg=new ArbreHuff();
+			fd=new ArbreHuff();
+			vide = 0;
+		}
+		
     public Couple getCouple() {
 		return couple;
 	}
@@ -59,7 +68,7 @@ public class ArbreHuff  {
 
 
 	public int isVide() {
-		if(this.couple == null){
+		if(this.fg == null && this.fd == null){
 			this.vide = Integer.MAX_VALUE;
 		}
 		return this.vide;
@@ -69,10 +78,28 @@ public class ArbreHuff  {
 		this.vide = vide;
 	}
 	
+	public Couple info()
+	{
+		return couple;
+	}
+	
+	//Fonction d'affichage comme décrite dans le cours (avec séparations)
+	public void afficheInfixe()
+	{
+		if(vide == 0)
+		{
+			fg.afficheInfixe();
+			System.out.println("'" + info().getCar() + "' : " + info().getFrequence());
+			fd.afficheInfixe();
+		}
+	}
+
 	@Override
 	public String toString() {
 		return "ArbreHuff [vide=" + vide + ", couple=" + couple + ", fg=" + fg + ", fd=" + fd + "]";
 	}
+	
+
 
 }
 

@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 public class main {
 
+	@SuppressWarnings("unused")
 	public static void main(String[] args) {
 		boolean jouer = true;
 		Scanner sc = new Scanner(System.in);
@@ -80,39 +81,55 @@ public class main {
 			System.out.println("			Bienvenu dans l'algorithme d'huffman, vous allez pouvoir coder et decoder des chaines de caractere");
 			System.out.println("/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////");
 			
-			 for (i=0; i<tabChar.length; i++){
-				  
-		        	System.out.println(charFreqs[i] + "\t" + tabChar[i]);
-		        }
+//			 for (i=0; i<tabChar.length; i++){
+//				  
+//		        	System.out.println(charFreqs[i] + "\t" + tabChar[i]);
+//		        }
 
-			 // On créer la liste contenant les arbres
+			 // On crée la liste contenant les arbres
 	        ListeR l = new ListeR();
+	        l.setVide(0);
+
+
 	        for (i=0; i<tabChar.length; i++){
-	  
 	        	l = l.insererOrd(new ArbreHuff(new Couple(charFreqs[i], tabChar[i])));
+	        	
+	 	       System.out.println(l.toString());
+	 	    //affichage tabCar fois Liste vide
 	        }
-	        
+	 	       System.out.println(l.toString());
+	 	       
+
 	        //D
 	        //System.out.println(l.reste.tete.couple.toString());
 
-
+	        
 	        ArbreHuff tree = huffman(l);
+
 	        tree.setVide(0);
-	        
-	        System.out.println(tree.couple.toString());
 
 	        
+	        
+	        
+	        //System.out.println(tree.couple.toString());
+	        tree.toString();
+	       
 
 	        System.out.println("TABLE DES CODES");
 	        System.out.println("LETTRE\tFREQUENCE\tCODE HUFFMAN");
+	        if(tree == null){
+	        	System.out.println("y'a rien");
+	        }
+	        else{
+	        	System.out.println("y'a qqch");
+	        }
 	        afficherCodes(tree, new StringBuffer());
 	        System.exit(0);
 
 	        
 	        System.out.println(" \nEntrez une phrase comportant les éléments de l'aphabet données :");
 	        test=sc.nextLine();
-	        sc.close();
-	        
+	
 	        
 	        // Encoder le texte
 	        String encode = encode(huffman(l),test);
@@ -132,15 +149,17 @@ public class main {
 	}
 
 	public static  ArbreHuff huffman(ListeR l) {
+    	assert l != null;
 		while(l.isVide() != 0){
 		System.out.println("c");
 			ArbreHuff z = new ArbreHuff(new Couple());
 			ArbreHuff x = l.getTete();
-			z.fg = x;
 			z.setVide(0);
+			z.setFg(x);
+			
 			ArbreHuff y = l.getReste().getTete();
-			z.fd = y;
-			z.couple.setFrequence(x.getCouple().getFrequence() + y.getCouple().getFrequence());
+			z.setFd(y);
+			z.getCouple().setFrequence(x.getCouple().getFrequence() + y.getCouple().getFrequence());
 			l.supprimerOrd(x);
 			l.supprimerOrd(y);
 			l.insererOrd(z);
@@ -199,6 +218,7 @@ public class main {
 	        }
 	        
 	        else{
+	        	
 	            // traverse gauche
 	            prefix.append('0');
 	            afficherCodes(tree.fg, prefix);

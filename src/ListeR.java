@@ -1,4 +1,4 @@
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MaximizeAction;
+//import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MaximizeAction;
 
 public class ListeR{
 	
@@ -23,15 +23,20 @@ public class ListeR{
 	//inserer dans l'ordre
 	public ListeR insererOrd(ArbreHuff val){
 		if(this.isVide() != 0){
+
 			return this.prefix(val);
 		}	
 		else if (val.couple.getFrequence()>=this.tete.couple.getFrequence()){
+
 			return this.prefix(val);
+
 		}
 		else{
+
 			return this.reste.insererOrd(val).prefix(this.tete);
 		}
 	}
+	
 	
 	//Suprimer dans l'ordre
 	public ListeR supprimerOrd(ArbreHuff v){
@@ -42,12 +47,21 @@ public class ListeR{
 			return this.reste;
 		}
 		else if (v.couple.getFrequence()>= this.tete.couple.getFrequence()){
+			
 			return this;
 		}
 		else
 			return this.reste.supprimerOrd(v).prefix(this.tete);
 	}
+	
+	public ListeR prefix(ArbreHuff i){
+
+		return new ListeR(i,this);
 		
+		//return new ListeR(i,this);
+	}
+
+	
 	public ArbreHuff getTete() {
 			return tete;	
 	}
@@ -61,16 +75,24 @@ public class ListeR{
 		}
 		return this.vide;
 	}
-	
-	public ListeR prefix(ArbreHuff i){
-		return new ListeR(i,this);
+	public int getVide() {
+		return vide;
 	}
-	
+	public void setVide(int vide) {
+		this.vide = vide;
+	}
+	public void setTete(ArbreHuff tete) {
+		this.tete = tete;
+	}
+	public void setReste(ListeR reste) {
+		this.reste = reste;
+	}
+
 	
 	@Override
 	public String toString() {
 		if(this.isVide() != 0)
-			return "Liste : " + tete + reste.toStringBis();
+			return "Liste : " + tete.toString() + reste.toStringBis();
 		else
 			return "Liste vide.";
 	}

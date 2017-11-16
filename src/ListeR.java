@@ -12,6 +12,7 @@ public class ListeR {
 
 	public ListeR(ArbreHuff tete) {
 		this.tete = tete;
+		this.reste = new ListeR();
 	}
 
 	public ListeR() {
@@ -19,27 +20,20 @@ public class ListeR {
 
 	// inserer dans l'ordre
 	public ListeR insererOrd(ArbreHuff val) { //
-		if (!this.isVide()) {
+		if (this.isVide()) {
 			return this.prefix(val);
-		} else if (val.couple.getFrequence() >= this.tete.couple.getFrequence()) {
+		} else if (val.couple.getFrequence() <= this.tete.couple.getFrequence()) {
 			System.out.println("d");
-			return prefix(val);
-		} else {
-			return this.reste.insererOrd(val).prefix(this.tete);
+			return this.prefix(val);
+		}
+		else {
+			return (this.reste.insererOrd(val).prefix(this.tete));
 		}
 	}
 	
-	// Suprimer dans l'ordre
-	public ListeR supprimerOrd(ArbreHuff v) { 
-		if (this.isVide()) {
-			return this;
-		} else if (this.tete == v) {
-			return this.reste;
-		} else if (v.couple.getFrequence() >= this.tete.couple.getFrequence()) {
-
-			return this;
-		} else
-			return this.reste.supprimerOrd(v).prefix(this.tete);
+	// Supprimer 
+	public ListeR supprimerOrd() { 
+		return this.getReste();
 	}
 
 	public ListeR prefix(ArbreHuff i) {

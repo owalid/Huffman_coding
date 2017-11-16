@@ -1,25 +1,25 @@
 public class Couple {
 
-	 int frequence;
-	 char car;
+	private int frequence;
+	private char car;
 
-	public Couple(int frequence, char car){
+	public Couple(int frequence, char car) {
 		this.frequence = frequence;
 		this.car = car;
 	}
-	
-	public Couple(){
-		
+
+	public Couple(int frequence) {
+		this.frequence = frequence;
 	}
-	
+
+	public Couple() {
+	}
+
 	@Override
 	public String toString() {
 		return "Couple [frequence=" + frequence + ", car=" + car + "]";
 	}
-	Couple(int frequence){
-		this.frequence = frequence;
-	}
-	
+
 	public int getFrequence() {
 		return frequence;
 	}
@@ -35,5 +35,5 @@ public class Couple {
 	public void setCar(char car) {
 		this.car = car;
 	}
-	
+
 }

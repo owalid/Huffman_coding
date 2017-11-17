@@ -1,10 +1,20 @@
-//import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MaximizeAction;
+//-----------------------------------------------------------------------------------------
+//EL AYADI OTHMANE / ASFAR MOHAMED RAFFIQUE  TP3B1
+//-----------------------------------------------------------------------------------------
 
+/**
+ * 
+ * @author Othmane & Asfar
+ *
+ */
 public class ListeR {
 
 	ArbreHuff tete;
 	ListeR reste;
 
+	//-------------
+	//constructeurs
+	//-------------
 	public ListeR(ArbreHuff tete, ListeR reste) {
 		this.tete = tete;
 		this.reste = reste;
@@ -18,12 +28,16 @@ public class ListeR {
 	public ListeR() {
 	}
 
+	//-------------
+	//methodes
+	//-------------
+	
+	
 	// inserer dans l'ordre
 	public ListeR insererOrd(ArbreHuff val) { //
 		if (this.isVide()) {
 			return this.prefix(val);
 		} else if (val.couple.getFrequence() <= this.tete.couple.getFrequence()) {
-			System.out.println("d");
 			return this.prefix(val);
 		}
 		else {
@@ -31,7 +45,7 @@ public class ListeR {
 		}
 	}
 	
-	// Supprimer 
+	// Supprimer un element dans une liste
 	public ListeR supprimerOrd() { 
 		return this.getReste();
 	}
@@ -39,6 +53,10 @@ public class ListeR {
 	public ListeR prefix(ArbreHuff i) {
 		return new ListeR(i, this);
 	}
+	
+	//-------------
+	//Getter and Setter
+	//-------------
 
 	public ArbreHuff getTete() {
 		return tete;

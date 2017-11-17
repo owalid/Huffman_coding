@@ -1,27 +1,43 @@
+//-----------------------------------------------------------------------------------------
+//EL AYADI OTHMANE / ASFAR MOHAMED RAFFIQUE  TP3B1
+//-----------------------------------------------------------------------------------------
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.LineNumberReader;
 import java.util.Scanner;
 
+/**
+ * 
+ * @author Othmane & Asfar
+ * 
+ * 
+ *     Comme vous n'avez pas mis des le debut du projet le tableau des frequences 
+ *			Nous avons choisi de definir nous meme notre tableau 
+ *					Merci pour votre comprension 
+ *
+ */
 public class main {
+	
+	//--------------------------------
+	//Init fichier et variables locales
+	//--------------------------------
+	
 
 	@SuppressWarnings("unused")
 	public static void main(String[] args) {
-		boolean jouer = true;
-		Scanner sc = new Scanner(System.in);
-		String mot;
-		int[] freqs = new int[100]; // Tableau qui va contenir les
-										// fréquences
+		FileReader fic = null;//Lecteur de fichier
+		BufferedReader tampon = null; //tampon
+		Scanner sc = new Scanner(System.in); //Scanner qui permetteras de recuperer la phrase a encoder
+		String mot; // mot a encoder recuperer par le scanner
+		int[] freqs = new int[100]; //tableau de frequence
 		String tabFic[]; // Tableau qui va récupérer les lignes du fichier .CSV
 		char chars[] = new char[100]; // Tableau contenant les caractères
-		FileReader fic = null;
-		BufferedReader tampon = null;
 		LineNumberReader countLine;
 
-		// Initialise le fichier à lire
+		// Initialisation du fic de frequences
 		try {
-			// Initialise le fichier à lire
 			fic = new FileReader("frequence.csv");
 			countLine = new LineNumberReader(new FileReader("frequence.csv"));
 			countLine.skip(Long.MAX_VALUE);
@@ -34,15 +50,10 @@ public class main {
 			int j = 0;
 
 			while (true) {
-				// Lit une ligne de frequence.csv
 				String ligne = tampon.readLine();
-				// Vérifie la fin de fichier
 				if (ligne == null)
 					break;
-				// sépare la fréquence et la lettre
 				tabFic = ligne.split(" ; ");
-
-				// On remplie les tableaux de fréquences et de lettre
 				for (int i = 0; i < 1; i++) {
 					chars[j] = tabFic[i].charAt(0);
 					freqs[j] = Integer.parseInt(tabFic[i + 1]);
@@ -83,48 +94,32 @@ public class main {
 			System.out.println(
 					"/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////");
 
-			// for (i=0; i<tabChar.length; i++){
-			//
-			// System.out.println(charFreqs[i] + "\t" + tabChar[i]);
-			// }
-
 			// On crée la liste contenant les arbres
 			ListeR l = new ListeR(new ArbreHuff(new Couple(freqs[0], chars[0])));
-
-
 			for (i = 1; i < chars.length; i++) {
+				//insere dans l'ordres les arbres reduit a des feuilles
 				l = l.insererOrd(new ArbreHuff(new Couple(freqs[i], chars[i])));
-				
-				System.out.println(l.toString());
-
 			}
-
-		
+	
+			//Algo permettant de construire l'arbre de huffman
 			ArbreHuff tree = huffman(l);
-			
-			// System.out.println(tree.couple.toString());
 
-			System.out.println("TABLE DES CODES");
-			System.out.println("LETTRE\tFREQUENCE\tCODE HUFFMAN");
-			if (tree == null) {
-				System.out.println("y'a rien");
-			} else {
-				System.out.println("y'a qqch");
-			}
+			System.out.println("Table");
+			System.out.println("lettre\t frequence \t code");
+			
 			afficherCodes(tree, new StringBuffer());
 		
-
-			System.out.println(" \nEntrez une phrase comportant les éléments de l'aphabet données :");
+			System.out.println(" \nEntrez la phrase que vous voulez coder : \n");
 			mot = sc.nextLine();
 
 			// Encoder le texte
 			String encode = encode(tree, mot);
 			// Afficher le texte encodé
-			System.out.println("\nTEXTE ENCODÉ");
+			System.out.println("\n\n\nphrase codé");
 			System.out.println(encode);
 
 			// Decoder le texte
-			System.out.println("\n\nTEXTE DÉCODÉ");
+			System.out.println("\n\n\nphrase decodé");
 			System.out.println(decode(tree, encode));
 
 
@@ -134,17 +129,11 @@ public class main {
 	public static ArbreHuff huffman(ListeR l) { 
 		assert l != null;
 		while (!l.getReste().isVide()) {
-			System.out.println("c");
-			
-			//ArbreHuff z = new ArbreHuff(new Couple());
-			
 			ArbreHuff x = l.getTete();
-			//z.setFg(x);
 			ArbreHuff y = l.getReste().getTete();
-			//z.setFd(y);
 			ArbreHuff z = new ArbreHuff(new Couple(x.getCouple().getFrequence() + y.getCouple().getFrequence()), y , x);
-			//z.getCouple().setFrequence(x.getCouple().getFrequence() + y.getCouple().getFrequence());
-
+			
+			//supprime les deux premier ellement additionner et ajoute l'arbre 
 			l = l.supprimerOrd();
 			l = l.supprimerOrd();
 			l = l.insererOrd(z);
@@ -156,38 +145,40 @@ public class main {
 		assert tree != null;
 
 		String decodeText = "";
-		ArbreHuff node = new ArbreHuff();
+		String codeCar ="";
+	
+		 ArbreHuff node = tree;//creer une copie de tree qui nous serviras a le parcourir
+
 		for (char code : encode.toCharArray()) {
-			if (code == '0') {
+
+			if (code == '0') {//si le code est a 0 alors ils faut chercher dans le fg
+				
 				// si c est une feuille
-				if (tree.fg.isFeuille()) {
-					decodeText += tree.fg.couple.getCar(); // Retour la valeur dans
-														// la feuille gauche
+				if (node.getFg().isFeuille()) {
+					decodeText += node.getFg().getCouple().getCar(); // Retour la valeur dans la feuille gauche							
+					node = 	tree;
+				} 
+				else {
+					node = node.getFg(); //sinon on continue dans le fg
+				}
+			} else if (code == '1') {//si le code est a 1 alors ils faut chercher dans le fd
+				if (node.getFd().isFeuille()) {
+					decodeText += node.getFd().getCouple().getCar(); // Retour la valeur dans la feuille droite													
 					node = tree;
 				} 
-//				else {
-//					node = node.fg;
-//				}
-			} else if (code == '1') {
-				if (tree.fd.isFeuille()) {
-					decodeText += tree.fg.couple.getCar(); // Retour la valeur dans
-														// la feuille gauche
-														// droite
-					node = tree;
-				} 
-//				else {
-//					node = node.fd;
-//				}
+				else {
+					node = node.getFd();
+				}
 			}
 		}
 		return decodeText; // Retourne le texte décodé
 	}
 
-	private static String encode(ArbreHuff tree, String test) {
+	private static String encode(ArbreHuff tree, String mot) {
 		assert tree != null;
 
 		String encodeText = "";
-		for (char c : test.toCharArray()) {
+		for (char c : mot.toCharArray()) {
 			encodeText += (getCodes(tree, new StringBuffer(), c));
 		}
 		return encodeText;
@@ -203,12 +194,12 @@ public class main {
 
 		else {
 
-			// traverse gauche
+			// on parcours la gauche
 			prefix.append('0');
 			afficherCodes(tree.fg, prefix);
 			prefix.deleteCharAt(prefix.length() - 1);
 
-			// traverse droite
+			// on parcours la droite
 			prefix.append('1');
 			afficherCodes(tree.fd, prefix);
 			prefix.deleteCharAt(prefix.length() - 1);

@@ -1,26 +1,41 @@
+//-----------------------------------------------------------------------------------------
+//EL AYADI OTHMANE / ASFAR MOHAMED RAFFIQUE  TP3B1
+//-----------------------------------------------------------------------------------------
+
+/**
+ * 
+ * @author Othmane & Asfar
+ *
+ */
 public class ArbreHuff {
 
 	public Couple couple;
 	public ArbreHuff fg, fd;
 	
+	//-------------
+	//constructeurs
+	//-------------
 	public ArbreHuff(Couple couple, ArbreHuff fd, ArbreHuff fg) {
 		this.couple = couple;
 		this.fd = fd;
 		this.fg = fg;
 	}
 
-	/*
-	 * 
-	 */
 
 	public ArbreHuff(Couple couple) {
 		this.couple = couple;
 	}
 
+	
 	public ArbreHuff() {
-		// TODO Auto-generated constructor stub
+		this.couple = new Couple();
 	}
 
+	//-------------
+	//methodes
+	//-------------
+	
+	//Savoir si un arbre est une feuille
 	public boolean isFeuille() { //
 		if (this.fg == null && this.fd == null) {
 			return true;
@@ -29,6 +44,11 @@ public class ArbreHuff {
 		}
 
 	}
+	
+	
+	//-------------
+	//Getter and Setter
+	//-------------
 	
 	public Couple getCouple() {
 		return couple;
@@ -56,15 +76,6 @@ public class ArbreHuff {
 
 	public boolean isVide() {
 		return this.couple == null;
-	}
-
-	// Fonction d'affichage comme décrite dans le cours (avec séparations)
-	public void afficheInfixe() {
-		if (!isVide()) {
-			fg.afficheInfixe();
-			System.out.println("'" + couple.getCar() + "' : " + couple.getFrequence());
-			fd.afficheInfixe();
-		}
 	}
 
 	@Override

@@ -1,8 +1,21 @@
+//-----------------------------------------------------------------------------------------
+//EL AYADI OTHMANE / ASFAR MOHAMED RAFFIQUE  TP3B1
+//-----------------------------------------------------------------------------------------
+
+/**
+ * 
+ * @author Othmane & Asfar
+ *
+ */
+
 public class Couple {
 
 	private int frequence;
 	private char car;
 
+	//-------------
+	//constructeurs
+	//-------------
 	public Couple(int frequence, char car) {
 		this.frequence = frequence;
 		this.car = car;
@@ -15,6 +28,9 @@ public class Couple {
 	public Couple() {
 	}
 
+	//-------------
+	//Getter and Setter
+	//-------------
 	@Override
 	public String toString() {
 		return "Couple [frequence=" + frequence + ", car=" + car + "]";
